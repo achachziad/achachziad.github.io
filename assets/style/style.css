@@ -182,7 +182,6 @@ main #hero-section #hero-right #ring:hover {
 }
 
 main #hero-section #hero-right img {
-  height: 300px;
   width: 300px;
   object-fit: cover;
   border-radius: 50%;
