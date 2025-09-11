@@ -172,6 +172,15 @@ main #hero-section #hero-right #ring:hover {
     margin-bottom: 25px;
   }
 }
+
+.hero img {
+  display: block;
+  margin: 40px auto 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+  max-width: 200px;
+}
+
 main #hero-section #hero-right img {
   height: 300px;
   width: 300px;
