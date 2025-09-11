@@ -22,7 +22,8 @@ const ExpertiseData = [
 
   { name: "pandas",     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" },
   { name: "Matplotlib", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg" },
-  { name: "Seaborn",    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/seaborn/seaborn-original.svg" }
+  { name: "Seaborn", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" }
+
 ];
 
 const ExpertiseDataHTML = ExpertiseData.map(
