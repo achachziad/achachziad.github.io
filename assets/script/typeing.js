@@ -4,13 +4,12 @@ const typingText = document.querySelector("#typing-text");
 const cursorSpan = document.querySelector("#cursor");
 
 const texts = [
-  "Web Designer",
-  "Video Editor",
-  "Blogger",
-  "Content Writer",
-  "Android Developer",
-  "YouTuber",
+  "Développeur Back-End",
+  "Étudiant M2 Informatique",
+  "Java • Node.js • SQL",
+  "Stage 4–6 mois dès mars 2026"
 ];
+
 
 const typingDelay = 200;
 const erasingDelay = 200;

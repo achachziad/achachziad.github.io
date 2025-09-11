@@ -5,54 +5,35 @@ const checkEmailIsValid = (email) => {
 
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("form");
-
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     await setEmail();
   });
-
 });
 
 async function setEmail() {
   const responseText = document.getElementById("message-response");
   const email = document.getElementById("Email").value.trim();
   const message = document.getElementById("Message").value.trim();
-  const emailUrl =
-    "https://script.google.com/macros/s/AKfycbwkjI7POBip0D3idUWfZwmdN4bV9TPfkfUWLwWZbu_rxDWSM5_F5VI1jVAXCKlRt0ykAg/exec";
 
   if (!email || !message) {
-    responseText.innerText = "Please fill both the fields.";
+    responseText.innerText = "Merci de remplir les deux champs.";
     return;
   }
-
   if (!checkEmailIsValid(email)) {
-    responseText.innerText = "Enter a valid email address.";
+    responseText.innerText = "Adresse e-mail invalide.";
     return;
   }
 
-  const formData = new FormData();
-  formData.set("Name", "@PORTFOLLIO");
-  formData.set("Email", email);
-  formData.set("Request", message);
+  // Pas d’envoi externe par défaut : on propose un mailto
+  const subject = encodeURIComponent("[Portfolio] Nouveau message");
+  const body = encodeURIComponent(`De: ${email}\n\n${message}`);
+  const mailto = `mailto:achach.ziad.pro@gmail.com?subject=${subject}&body=${body}`;
 
-  responseText.innerText = "Sending...";
+  responseText.innerText = "Ouverture de votre client e-mail…";
+  window.location.href = mailto;
 
-  try {
-    const response = await fetch(emailUrl, {
-      method: "POST",
-      body: formData,
-    }).catch((error) => {
-      throw error; // throw a text
-    });
-
-    const result = await response.json();
-
-    responseText.innerText = `${result.result}`;
-
-    setTimeout(resetTheForm, 2000);
-  } catch (error) {
-    responseText.innerText = "Something went wrong, try again. " + error;
-  }
+  setTimeout(resetTheForm, 1500);
 }
 
 function resetTheForm() {
