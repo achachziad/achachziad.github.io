@@ -22,7 +22,7 @@ const ExpertiseData = [
 
   { name: "pandas",     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" },
   { name: "Matplotlib", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg" },
-  { name: "Seaborn", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" }
+  { name: "Seaborn", logo: "./assets/img/seaborn.svg" }
 
 ];
 
