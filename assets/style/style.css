@@ -180,15 +180,14 @@ main #hero-section #hero-right #ring:hover {
   object-fit: cover;
   max-width: 200px;
 }
-
-main #hero-section #hero-right img {
-  width: 300px;
+#hero-section #hero-right img {
+  width: 300px;       /* largeur fixe */
+  height: auto;       /* hauteur auto => garde proportions naturelles */
   object-fit: cover;
   border-radius: 50%;
-  -webkit-box-shadow: -1px -1px 64px -13px rgba(0, 0, 0, 0.38);
-  -moz-box-shadow: -1px -1px 64px -13px rgba(0, 0, 0, 0.38);
-  box-shadow: -1px -1px 64px -13px rgba(0, 0, 0, 0.38);
+  box-shadow: 1px 1px 64px -13px rgba(0,0,0,0.38);
 }
+
 @media (max-width: 575.98px) {
   main #hero-section #hero-right {
     margin-top: 30px;
