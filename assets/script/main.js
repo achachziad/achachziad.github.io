@@ -24,12 +24,12 @@ function initThemeButtonEvent() {
     span.addEventListener("click", () => {
       switch (index) {
         case 1: {
-          setTheme("#13071f", "#9900ff", "#9900ff5f");
+          setTheme("#1C1C1E", "#FF6F61", "#FF6F615f");
           break;
         }
 
         case 0: {
-          setTheme("#1C1C1E", "#FF6F61", "#FF6F615f");
+          setTheme("#13071f", "#9900ff", "#9900ff5f");
           break;
         }
         case 2: {

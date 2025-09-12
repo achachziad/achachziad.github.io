@@ -444,7 +444,9 @@ footer #contact-section #copyright a {
   color: var(--color-primary);
   text-decoration: overline;
 }
-
+#hero-section span {
+  color: var(--color-primary) !important;
+}
 /*--------------------------------------------------------------
   # Footer -> Theme Button
   --------------------------------------------------------------*/
