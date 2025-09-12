@@ -24,8 +24,8 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0%;
-  padding: 0%;
+  margin: 0;
+  padding: 0;
 }
 
 p {
@@ -56,8 +56,8 @@ button {
   # ROOT, HTML, Body.
   --------------------------------------------------------------*/
 * {
-  padding: 0%;
-  margin: 0%;
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
@@ -225,7 +225,7 @@ main #about-section {
   margin: auto;
 }
 main #about-section h2 {
-  margin: 12px 0px 12px;
+  margin: 12px 0 12px;
   font-size: var(--font-size-heading);
 }
 main #about-section p {
@@ -237,7 +237,7 @@ main #about-section p span {
   color: var(--color-primary);
 }
 main #about-section li {
-  margin: 25px 0px 20px;
+  margin: 25px 0 20px;
   line-height: 1.6;
   font-size: var(--font-size-body);
   color: var(--color-text-gray);
@@ -340,7 +340,6 @@ main #projects-section #projects-card-container .projects-card a {
   border: none;
   outline: 1px solid var(--color-primary);
   background: transparent;
-  color: var(--color-text);
   transition: all 0.8s;
 }
 main #projects-section #projects-card-container .projects-card a:hover {
@@ -357,7 +356,7 @@ footer #contact-section {
   margin-top: 55px;
 }
 footer #contact-section h2 {
-  margin: 12px 0px;
+  margin: 12px 0;
   font-size: var(--font-size-heading);
 }
 footer #contact-section #contact-container {
@@ -401,7 +400,7 @@ footer #contact-section #contact-container #contact-form form button:hover {
 }
 footer #contact-section #contact-container #contact-form form #message-response {
   font-size: var(--font-size-small);
-  margin: 12px 0px;
+  margin: 12px 0;
   display: block;
   color: var(--color-text-gray);
 }
@@ -442,7 +441,6 @@ footer #contact-section #copyright {
   margin: 10px;
 }
 footer #contact-section #copyright a {
-  text-decoration: none;
   color: var(--color-primary);
   text-decoration: overline;
 }
@@ -519,5 +517,54 @@ footer #settings-button:hover {
   transform: scale(0.5) !important; /* Shrinks the box */
   pointer-events: none !important; /* Prevents interactions when hidden */
 }
+
+.experience-card {
+  background: #1C1C1E;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.experience-card h3 {
+  margin: 0;
+  color: var(--color-primary);
+}
+.experience-card h4 {
+  margin: 5px 0;
+  font-weight: normal;
+  color: #aaa;
+}
+.experience-card p {
+  margin: 0;
+}
+/* Section spacing */
+#experience { margin: 32px 0; }
+
+/* Grille identique aux projets */
+#experience-card-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* Carte expérience = thème du site */
+.experience-card{
+  background: #1C1C1E;                          /* fond comme le reste */
+  border: 1px solid var(--color-highlight);      /* liseré thème */
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+
+/* Titres et texte */
+.experience-card h3{ margin:0 0 4px; color: var(--color-primary); }
+.experience-card h4{
+  margin: 0 0 8px;
+  font-weight: 500;
+  color: #aaa;
+}
+.experience-card p{ margin:0; color:#ddd; line-height:1.5; }
+
 
 /*# sourceMappingURL=style.css.map */

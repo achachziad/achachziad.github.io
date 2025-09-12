@@ -1,31 +1,31 @@
 const ProjectsData = [
   {
-    name: "GéoJourney (Python)",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+    name: "Petapp (Kotlin)",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg",
     description:
-        "Calcul d’itinéraires multi-villes + visualisation cartographique (GeoPandas). Parsing et traitement de données.",
-    link: "https://github.com/achachziad", // remplace par le dépôt si public
+        "Application de gestions d'activité pour animaux domestique",
+    link: "https://github.com/achachziad/Petapp",
   },
   {
     name: "Borondeur (Java)",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
     description:
         "Appli d’itinéraires pour IDFM. Projet en équipe (Agile). TDD avec JUnit pour fiabilité/maintenabilité.",
-    link: "https://github.com/achachziad", // remplace par le dépôt si public
+    link: "https://github.com/achachziad/Borondeur",
   },
   {
     name: "Shazoum (C++)",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
     description:
         "Reconnaissance acoustique via empreintes audio (FFT/DCT). Traitement de fichiers WAV et comparaison rapide.",
-    link: "https://github.com/achachziad", // remplace par le dépôt si public
+    link: "https://github.com/achachziad/Shazoum",
   },
   {
     name: "ColiRoute (Node.js + SQLite)",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
     description:
         "Application interne de gestion colis/clients/trajets, tri par destination, QR codes pour le suivi.",
-    link: "https://github.com/achachziad", // remplace par le dépôt si public
+    link: "https://github.com/achachziad",
   },
 ];
 
