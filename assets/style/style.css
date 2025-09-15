@@ -519,54 +519,37 @@ footer #settings-button:hover {
   transform: scale(0.5) !important; /* Shrinks the box */
   pointer-events: none !important; /* Prevents interactions when hidden */
 }
+/* Section expériences */
+/* Uniformiser le conteneur des expériences avec les autres sections */
+#experience {
+  margin: 32px auto;           /* espace haut/bas */
+  padding: 0;                  /* retire les paddings parasites */
+  max-width: 1200px;           /* même largeur que les autres sections */
+  width: 90%;                  /* centré comme le reste */
+}
 
-.experience-card {
+
+/* Toujours une seule colonne (empilé) */
+#experience-card-container{
+  display: grid;
+  grid-template-columns: 1fr; /* 1 seule colonne */
+  gap: 12px;                  /* espace vertical entre cartes */
+}
+
+/* Carte expérience: même thème que le site */
+.experience-card{
   background: #1C1C1E;
   border: 1px solid var(--color-highlight);
   border-radius: 10px;
-  padding: 15px;
-  margin: 10px 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-.experience-card h3 {
-  margin: 0;
-  color: var(--color-primary);
-}
-.experience-card h4 {
-  margin: 5px 0;
-  font-weight: normal;
-  color: #aaa;
-}
-.experience-card p {
-  margin: 0;
-}
-/* Section spacing */
-#experience { margin: 32px 0; }
-
-/* Grille identique aux projets */
-#experience-card-container{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-}
-
-/* Carte expérience = thème du site */
-.experience-card{
-  background: #1C1C1E;                          /* fond comme le reste */
-  border: 1px solid var(--color-highlight);      /* liseré thème */
-  border-radius: 10px;
   padding: 16px;
   box-shadow: 0 2px 5px rgba(0,0,0,.2);
+  width: 100%;               /* pleine largeur du container */
 }
 
-/* Titres et texte */
 .experience-card h3{ margin:0 0 4px; color: var(--color-primary); }
-.experience-card h4{
-  margin: 0 0 8px;
-  font-weight: 500;
-  color: #aaa;
-}
-.experience-card p{ margin:0; color:#ddd; line-height:1.5; }
+.experience-card h4{ margin:0 0 8px; font-weight:500; color:#aaa; }
+.experience-card p{  margin:0; color:#ddd; line-height:1.5; }
+
 
 
 /*# sourceMappingURL=style.css.map */
