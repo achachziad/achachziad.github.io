@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Extraction PDF</title>
+  <link rel="stylesheet" href="./extract.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <h1>Extraction de texte PDF</h1>
+      <button id="theme-toggle" type="button" aria-label="Changer le thème">
+        🌙 / ☀️
+      </button>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Importer un PDF</h2>
+        <p>Sélectionne un fichier PDF pour extraire son texte.</p>
+
+        <input id="pdf-input" type="file" accept="application/pdf" />
+
+        <div class="actions">
+          <button id="extract-btn" type="button">Extraire le texte</button>
+          <button id="copy-btn" type="button">Copier le texte</button>
+          <button id="clear-btn" type="button">Vider</button>
+        </div>
+
+        <p id="status" class="status">Aucun fichier sélectionné.</p>
+      </section>
+
+      <section class="card">
+        <h2>Texte extrait</h2>
+        <textarea
+          id="output-text"
+          placeholder="Le texte extrait du PDF apparaîtra ici..."
+          rows="18"
+        ></textarea>
+      </section>
+    </main>
+  </div>
+
+  <script src="./vendor/pdf.min.js"></script>
+  <script src="./extract.js"></script>
+</body>
+</html>

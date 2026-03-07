@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Traduction de texte</title>
+  <link rel="stylesheet" href="./traduct.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1>Traduct</h1>
+      </div>
+
+      <div class="topbar-right">
+        <button id="theme-toggle" type="button" aria-label="Changer le thème">
+          🌙 / ☀️
+        </button>
+
+        <div class="menu-wrapper">
+          <button
+            id="menu-toggle"
+            class="menu-toggle"
+            type="button"
+            aria-label="Ouvrir le menu"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+
+          <div id="menu-dropdown" class="menu-dropdown hidden">
+            <button id="paste-btn" type="button">Coller</button>
+            <button id="copy-btn" type="button">Copier</button>
+            <button id="clear-btn" type="button">Vider</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="editor-area">
+      <textarea
+        id="input-text"
+        placeholder="Colle ici le texte à traduire..."
+        translate="yes"
+        spellcheck="false"
+      ></textarea>
+    </main>
+  </div>
+
+  <script src="./traduct.js"></script>
+</body>
+</html>
