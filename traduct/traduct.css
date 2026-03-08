@@ -88,14 +88,12 @@ body {
   padding: 16px;
   font-size: 1rem;
   line-height: 1.6;
-  resize: none;
   background: var(--surface-2);
   color: var(--text);
   outline: none;
-}
-
-#input-text:focus {
-  border-color: var(--text-muted);
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 button {
