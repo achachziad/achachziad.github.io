@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuDropdown = document.getElementById("menu-dropdown");
 
   const THEME_KEY = "site-theme";
+  const PDF_TEXT_KEY = "pdfTextToTranslate";
 
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function initTheme() {
     const savedTheme = localStorage.getItem(THEME_KEY);
+
     if (savedTheme === "dark" || savedTheme === "light") {
       applyTheme(savedTheme);
     } else {
@@ -36,6 +38,23 @@ document.addEventListener("DOMContentLoaded", () => {
       menuToggle.setAttribute("aria-expanded", "true");
     } else {
       closeMenu();
+    }
+  }
+
+  function setDisplayedText(text) {
+    inputText.textContent = text || "";
+  }
+
+  function getDisplayedText() {
+    return inputText.textContent || "";
+  }
+
+  function loadTextFromSessionStorage() {
+    const storedText = sessionStorage.getItem(PDF_TEXT_KEY);
+
+    if (storedText && storedText.trim()) {
+      setDisplayedText(storedText);
+      sessionStorage.removeItem(PDF_TEXT_KEY);
     }
   }
 
@@ -60,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const text = await navigator.clipboard.readText();
 
       if (text) {
-        inputText.value = text;
+        setDisplayedText(text);
       }
     } catch (error) {
       console.error(error);
@@ -71,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   copyBtn.addEventListener("click", async () => {
-    const text = inputText.value;
+    const text = getDisplayedText();
 
     if (!text.trim()) {
       closeMenu();
@@ -89,9 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   clearBtn.addEventListener("click", () => {
-    inputText.value = "";
+    setDisplayedText("");
     closeMenu();
   });
 
   initTheme();
+  loadTextFromSessionStorage();
 });
