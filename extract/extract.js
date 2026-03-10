@@ -9,51 +9,95 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const THEME_KEY = "site-theme";
 
+  // ── Thème ──────────────────────────────────────────────────────────────────
+
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem(THEME_KEY, theme);
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch (_) {
+      // localStorage indisponible (mode privé, iframe sandbox…)
+    }
   }
 
   function initTheme() {
-    const savedTheme = localStorage.getItem(THEME_KEY);
-    if (savedTheme === "dark" || savedTheme === "light") {
-      applyTheme(savedTheme);
-    } else {
-      applyTheme("light");
-    }
+    let savedTheme = null;
+    try {
+      savedTheme = localStorage.getItem(THEME_KEY);
+    } catch (_) {}
+    applyTheme(savedTheme === "dark" ? "dark" : "light");
   }
+
+  // ── Statut ─────────────────────────────────────────────────────────────────
 
   function setStatus(message) {
-    if (statusText) {
-      statusText.textContent = message;
-    }
+    if (statusText) statusText.textContent = message;
   }
 
-  function cleanText(str) {
-    if (typeof str !== "string") return "";
-    return str.replace(/\s+/g, " ").trim();
-  }
+  // ── Extraction avec préservation de la mise en forme ──────────────────────
 
+  /**
+   * Reconstitue le texte d'une page en respectant :
+   *  - les retours à la ligne (détectés via le changement de coordonnée Y)
+   *  - les espaces entre les mots (détectés via hasEOL et l'écart horizontal)
+   *  - les lignes vides significatives
+   */
   async function extractPageText(pdf, pageNumber) {
     const page = await pdf.getPage(pageNumber);
-    const textContent = await page.getTextContent();
+    const textContent = await page.getTextContent({
+      includeMarkedContent: false,   // on n'a pas besoin des artefacts
+      disableNormalization: false
+    });
 
-    if (!textContent || !Array.isArray(textContent.items)) {
+    if (!textContent || !Array.isArray(textContent.items) || textContent.items.length === 0) {
       return "";
     }
 
-    const parts = [];
+    const lines = [];
+    let currentLine = [];
+    let lastY = null;
+    // Tolérance verticale : deux items sont sur la même ligne
+    // si leur différence de Y est inférieure à ce seuil (en unités PDF).
+    const Y_TOLERANCE = 2;
 
     for (const item of textContent.items) {
+      // Certains items sont des MarkedContent et n'ont pas de str
       if (!item || typeof item.str !== "string") continue;
 
-      const text = cleanText(item.str);
-      if (!text) continue;
+      const str = item.str;
+      // transform[5] = coordonnée Y dans l'espace PDF
+      const y = item.transform ? item.transform[5] : null;
 
-      parts.push(text);
+      // Saut de ligne : changement de Y ou marqueur explicite hasEOL
+      const isNewLine =
+        lastY !== null &&
+        y !== null &&
+        Math.abs(y - lastY) > Y_TOLERANCE;
+
+      if (isNewLine || item.hasEOL) {
+        // Valide la ligne courante
+        if (currentLine.length > 0) {
+          lines.push(currentLine.join(""));
+          currentLine = [];
+        } else {
+          // Ligne vide explicite → on la conserve pour espacer les paragraphes
+          lines.push("");
+        }
+      }
+
+      if (str) {
+        currentLine.push(str);
+      }
+
+      if (y !== null) lastY = y;
     }
 
-    return parts.join(" ").replace(/\s+([,.;:!?])/g, "$1").trim();
+    // Flush de la dernière ligne
+    if (currentLine.length > 0) {
+      lines.push(currentLine.join(""));
+    }
+
+    return lines.join("\n");
   }
 
   async function extractTextFromPdf(file) {
@@ -72,30 +116,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const pdf = await loadingTask.promise;
 
-    let fullText = "";
+    const pageParts = [];
     let okPages = 0;
 
     for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
-      setStatus(`Extraction en cours... page ${pageNumber}/${pdf.numPages}`);
+      setStatus(`Extraction en cours… page ${pageNumber} / ${pdf.numPages}`);
 
       try {
         const pageText = await extractPageText(pdf, pageNumber);
 
-        if (pageText) {
-          fullText += `--- Page ${pageNumber} ---\n${pageText}\n\n`;
+        if (pageText && pageText.trim()) {
+          pageParts.push(`--- Page ${pageNumber} ---\n${pageText}`);
           okPages++;
         }
       } catch (err) {
-        console.error(`Erreur page ${pageNumber}:`, err);
+        console.error(`Erreur page ${pageNumber} :`, err);
+        pageParts.push(`--- Page ${pageNumber} --- [erreur : ${err.message}]`);
       }
     }
 
     return {
-      text: fullText.trim(),
+      text: pageParts.join("\n\n"),
       okPages,
       totalPages: pdf.numPages
     };
   }
+
+  // ── Boutons ────────────────────────────────────────────────────────────────
 
   extractBtn.addEventListener("click", async () => {
     const file = pdfInput?.files?.[0];
@@ -115,23 +162,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     outputText.value = "";
-    setStatus("Chargement du PDF...");
+    extractBtn.disabled = true;
+    setStatus("Chargement du PDF…");
 
     try {
       const result = await extractTextFromPdf(file);
 
-      if (!result.text) {
-        setStatus("Aucun texte exploitable trouvé dans ce PDF.");
+      if (!result.text || !result.text.trim()) {
+        setStatus("Aucun texte exploitable trouvé dans ce PDF (PDF scanné ?).");
         return;
       }
 
       outputText.value = result.text;
       setStatus(
-        `Extraction terminée. ${result.okPages}/${result.totalPages} page(s) lues.`
+        `Extraction terminée — ${result.okPages} / ${result.totalPages} page(s) lue(s).`
       );
     } catch (error) {
       console.error("Erreur extraction :", error);
       setStatus(`Erreur pendant l'extraction : ${error.message}`);
+    } finally {
+      extractBtn.disabled = false;
     }
   });
 
@@ -145,10 +195,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       await navigator.clipboard.writeText(text);
-      setStatus("Texte copié.");
+      setStatus("Texte copié dans le presse-papiers.");
     } catch (error) {
       console.error("Erreur copie :", error);
-      setStatus("Impossible de copier automatiquement.");
+      // Fallback pour les navigateurs sans accès clipboard
+      outputText.select();
+      const success = document.execCommand("copy");
+      setStatus(success ? "Texte copié (fallback)." : "Impossible de copier automatiquement.");
     }
   });
 
